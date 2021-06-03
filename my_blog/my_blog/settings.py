@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'w0e%nyg@_ri9#e)kbp#(e!1le-$(gw%3h)b%6#x28@dl_q-_zs'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['47.119.149.209']
 
 
 # Application definition
@@ -140,6 +140,9 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
        os.path.join(BASE_DIR, 'static') ,
 )
+
+# 静态文件收集目录
+STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')
 
 # 发送邮箱的相关配置
 # smtp服务器

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+<!-- extends表明此页面继承自 base.html 文件 -->
+<!-- 
+    载入静态文件
+    使用 Django 3 学习的读者改为 {% load static %}
+-->
+{% load staticfiles %}
+
+<!-- 写入 base.html 中定义的 title -->
+{% block title %}
+关于我
+{% endblock title %}
+
+<!-- 写入 base.html 中定义的 content -->
+{% block content %}
+
+<div class="content-body" >
+    <div class="container" >
+        <div class="row" >
+            <main class="col-md-12" >
+                <h1 class="page-title" style="color:rgb(40, 75, 77);">关于 我🎈</h1>
+                <hr width="50%">
+                <article class="post" style="background: #ffffffb5; border-radius: 30px; box-shadow: 0 0 5px #ccc;">
+                    <div class="entry-content clearfix" >
+                        <figure class="img-responsive-center">
+                            <img style="width:300px; height:300px; border-radius:50%; " class="img-responsive" src="{% static 'img/love.jpg' %}" alt="＞﹏＜">
+                        </figure>
+                        
+                        <div class="height-40px" style="text-align: center; font-size: 1.2em;">
+                            <p>hello~这里是零圆的个人博客！</p>
+                            <p>一起来享受编程的乐趣吧！</p>
+                            <p>学习交流：w723817796@163.com</p>
+                        </div>
+                        <hr color="paleturquoise">
+                        
+                        <h3 class="title text-center">🧡💛💙💚💜🖤</h3>
+                        <ul class="social">
+                            <li class="facebook"><a ><span class="ion-social-facebook"></span></a></li>
+                            <li class="twitter"><a ><span class="ion-social-twitter"></span></a></li>
+                            <li class="google-plus"><a ><span class="ion-social-googleplus"></span></a></li>
+                            <li class="tumblr"><a ><span class="ion-social-tumblr"></span></a></li>
+                        </ul>
+                    </div>
+                </article>
+            </main>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

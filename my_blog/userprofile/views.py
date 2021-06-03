@@ -13,6 +13,7 @@ def user_login(request):
     if request.method == 'POST':
         user_login_form = UserLoginForm(data=request.POST)
         if user_login_form.is_valid():
+            
             # .cleaned_data 清洗出合法数据
             data = user_login_form.cleaned_data
             # 检验账号、密码是否正确匹配数据库中的某个用户
@@ -21,22 +22,25 @@ def user_login(request):
             if user:
                 # 将用户数据保存在 session 中，即实现了登录动作
                 login(request, user)
-                return redirect("article:article_list")
+                return redirect("myadmin:admin_home")
             else:
-                return HttpResponse("账号或密码输入有误。请重新输入~")
+                context = {'errtxt': '账号或密码输入有误'}
+                return render(request, '404.html', context)
         else:
-            return HttpResponse("账号或密码输入不合法")
+            context = {'errtxt': '账号或密码输入不合法'}
+            return render(request, '404.html', context)
     elif request.method == 'GET':
-        user_login_form = UserLoginForm()
-        context = { 'form': user_login_form }
-        return render(request, 'userprofile/login.html', context)
+        return render(request, 'userprofile/login.html')
     else:
-        return HttpResponse("请使用GET或POST请求数据")
+        context = {'errtxt': '请使用GET或POST请求数据'}
+        return render(request, '404.html', context)
 
 # 用户退出
+# 检查登录
+@login_required(login_url='/userprofile/login/')
 def user_logout(request):
     logout(request)
-    return redirect("article:article_list")
+    return redirect("my_home")
 
 # 注册用户
 def user_register(request):

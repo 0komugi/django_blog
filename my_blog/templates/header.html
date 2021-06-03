@@ -1,75 +1,104 @@
 <!-- 定义导航栏 -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-  
-        <!-- 导航栏商标 -->
-        <a class="navbar-brand" href="#">我的博客</a>
-  
-        <!-- 导航入口 -->
-        <div>
-            <ul class="navbar-nav">
-                <!-- 条目 -->
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'article:article_create' %}">写文章</a>
-                </li>
+<div class="container" >
+    <header id="site-header" style="background: #ffffffb5; border-radius: 18px; box-shadow: 0 0 5px #ccc;">
+        <div class="row" >
+            <!-- 导航栏商标 -->
+            <div class="col-md-4 col-sm-5 col-xs-8" >
+                <div class="logo" >
+                    <h1 ><a href="{% url 'my_home' %}" style="color:rgb(54, 109, 112); font-size: 1.1em;"><b>🌵零圆</b>的博客</a></h1>
+                </div>
+            </div><!-- col-md-4 -->
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'article:article_list' %}">文章</a>
-                </li> 
-                
-                <!-- Django的 if 模板语句 -->
-                {% if user.is_authenticated %}
-                <!-- 如果用户已经登录，则显示用户名下拉框 -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{ user.username }}
-                        </a>
+            <!-- 导航入口 -->
+            <div class="col-md-8" >
+                <nav class="main-nav" role="navigation" >
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" >
+                        <ul class="nav navbar-nav navbar-right" >
+                            <li class="cl-effect-11" >
+                                <a href="{% url 'my_home' %}" data-hover="主页" style="font-size: 21px;">主页💬</a>
+                            </li>
+                            <li class="cl-effect-11" >
+                                <a href="{% url 'article:article_list' %}" data-hover="技术文章" style="font-size: 21px;">技术文章📝</a>
+                            </li>
+                            <li class="cl-effect-11" >
+                                <a href="{% url 'article:chart' %}" data-hover="数据查看" style="font-size: 21px;">数据查看📊</a>
+                            </li>
+                            <li class="cl-effect-11">
+                                <a href="{% url 'userprofile:login' %}" data-hover="后台管理" style="font-size: 21px;">后台管理🔐</a>
+                            </li>
+                            <li class="cl-effect-11">
+                                <a href="{% url 'about_me' %}" data-hover="关于 我" style="font-size: 21px;">关于 我👩</a>
+                            </li>
 
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href='{% url "userprofile:edit" user.id %}'>个人信息</a>
-                            <a class="dropdown-item" href='#' onclick="user_delete()">注销用户</a>
-                            <a class="dropdown-item" href='{% url "userprofile:logout" %}'>退出登录</a>
-                        </div>
-                    </li>
-                <!-- 如果用户未登录，则显示 “登录” -->
-                {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'userprofile:login' %}">登录</a>
-                    </li>                    
-                <!-- if 语句在这里结束 -->
-                {% endif %}
-            </ul>
-      </div>
-    </div>
-</nav>
+                            <!-- Django的 if 模板语句 -->
+                            <!-- {% if user.is_authenticated %} -->
+                            <!-- 如果用户已经登录，则显示用户名下拉框 -->
+                            <!-- <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{ user.username }}
+                                </a>
 
-{% if user.is_authenticated %}
-    <form
-        style="display:none;"
-        id='user_delete'
-        action="{% url 'userprofile:delete' user.id %}"
-        method="POST"
-    >
-        {%  csrf_token %}
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href='{% url "userprofile:edit" user.id %}'>个人信息</a>
+                                    <a class="dropdown-item" href='#' onclick="user_delete()">注销用户</a>
+                                    <a class="dropdown-item" href='{% url "userprofile:logout" %}'>退出登录</a>
+                                </div>
+                            </li> -->
+                            <!-- 如果用户未登录，则显示 “登录” -->
+                            <!-- {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'userprofile:login' %}">登录</a>
+                            </li> -->
+                            <!-- if 语句在这里结束 -->
+                            <!-- {% endif %} -->
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </nav>
+                <div id="header-search-box">
+                    <a id="search-menu" href="#"><span id="search-icon" class="ion-ios-search-strong"></span></a>
+                    <div id="search-form" class="search-form" style="display: none;">
+                        <form role="search" method="get" id="searchform" action="#">
+                            <input name="search" type="search" placeholder="搜索" required="">
+                            <button type="submit"><span class="ion-ios-search-strong"></span></button>
+                        </form>
+                    </div>
+                </div>
 
-        <button type="submit">发送</button>
-    </form>
+            </div><!-- col-md-8 -->
+        </div>
+    </header>
+    
+    {% if search %}
+    {% if articles %}
+    <h3 class="title text-center" style="color:rgb(27, 54, 56);">🔍<span style="color: rgb(56, 72, 124)">"{{ search }}"</span>的搜索结果如下：</h3>
+    <hr width="85%" color="paleturquoise">
+    {% else %}
+    <h3 class="title text-center"style="color:rgb(27, 54, 56);">暂无<span style="color: rgb(143, 73, 73)">"{{ search }}"</span>有关的文章。</h3>
+    {% endif %}
+    {% endif %}
+</div>
 
-    <script>
-        function user_delete() {
-            // 调用layer弹窗组件        
-            //细心细心细心！！！
-            layer.open({            
-                title: '确认删除',
-                content: '确认删除用户资料吗？',
-                yes: function(index, layero) {
-                    $('form#user_delete button').click();
-                    layer.close(index);
-                },
-            })
-        }
-    </script>
-{% endif %}
+<!-- 删除用户验证 -->
+<!-- {% if user.is_authenticated %}
+<form style="display:none;" id='user_delete' action="{% url 'userprofile:delete' user.id %}" method="POST">
+    {% csrf_token %}
 
+    <button type="submit">发送</button>
+</form>
 
-
+<script>
+    function user_delete() {
+        // 调用layer弹窗组件        
+        //细心细心细心！！！
+        layer.open({
+            title: '确认删除',
+            content: '确认删除用户资料吗？',
+            yes: function (index, layero) {
+                $('form#user_delete button').click();
+                layer.close(index);
+            },
+        })
+    }
+</script>
+{% endif %} -->

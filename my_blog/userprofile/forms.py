@@ -22,7 +22,7 @@ class UserRegisterForm(forms.ModelForm):
 
     # 对两次输入的密码是否一致进行检查
     def clean_password2(self):
-        data = self.cleaned_data
+        data = self.cleaned_data    # 得到字典
         if data.get('password') == data.get('password2'):
             return data.get('password')
         else:

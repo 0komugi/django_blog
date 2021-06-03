@@ -1,0 +1,17 @@
+{% extends "myadmin/base.html" %}
+{% load staticfiles %}
+
+{% block title %} 文章详情 {% endblock title %}
+{% block content %}
+
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+      <h1 class="h2" style="width: 80%; margin: 0 auto; text-align: center;">{{ article.title }}</h1>
+    </div>
+    <div class="table-responsive" style="width: 75%; margin: 0 auto; font-size: 1.2em; ">
+        <p style="font-size: 30px;">{{ article.body|safe }}</p>
+    </div>
+
+</main>
+
+{% endblock content %}

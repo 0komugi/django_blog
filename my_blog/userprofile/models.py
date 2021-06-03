@@ -18,7 +18,7 @@ class Profile(models.Model):
     bio = models.TextField(max_length=500, blank=True)
 
     def __str__(self):
-        return 'user {}'.format(self.user.username)
+         return 'user {}'.format(self.user.username)
 
 # # 信号接收函数，每当新建 User 实例时自动调用
 # @receiver(post_save, sender=User)

@@ -1,0 +1,58 @@
+{% extends "myadmin/base.html" %}
+{% load staticfiles %}
+
+{% block title %}数据分析{% endblock title%}
+
+{% block content %}
+    <script type="text/javascript" src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
+    <script type="text/javascript" src="http://cdn.hcharts.cn/highcharts/exporting.js"></script>
+
+
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+      <h1 class="h2">数据统计</h1>
+    </div>
+        <div id="container" ></div>
+  </main>
+  
+<script>
+var chart = Highcharts.chart('container',{
+	chart: {
+		type: 'column'
+	},
+	title: {
+		text: '博客文章相关数据分析'
+	},
+	xAxis: {
+		categories: [
+			'一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'
+		],
+		crosshair: true
+	},
+	yAxis: {
+		min: 0,
+		title: {
+			text: '文章数量'
+		}
+	},
+	
+	plotOptions: {
+		column: {
+			borderWidth: 0
+		}
+	},
+	series: [{
+		name: '文章总数',
+		data: [0, 2, 5, 15, 30] 
+	}, {
+		name: '文章发布数',
+		data: [0, 3, 4, 15, 25]
+	}, {
+		name: '文章删除数',
+		data: [0, 1, 1, 5, 10]
+	}]
+});
+</script>
+{% endblock content %}
+

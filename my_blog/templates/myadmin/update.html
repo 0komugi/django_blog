@@ -1,0 +1,41 @@
+{% extends "myadmin/base.html" %}
+{% load staticfiles %}
+
+{% block title %}编辑文章{% endblock title%}
+
+{% block content %}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">编辑文章</h1>
+  </div>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>title</th>
+          <th>created</th>
+          <th>updated</th>
+          <th>column</th>
+          <th>update</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for article in article_list %}
+        <tr>
+          <td>{{article.id}}</td>
+          <td>{{article.title}}</td>
+          <td>{{article.created}}</td>
+          <td>{{article.updated}}</td>
+          <td>{{ article.column }}</td>
+          <td><a href="{% url 'myadmin:article_update' article.id %}">更新</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+
+  </div>
+</main>
+
+{% endblock content %}

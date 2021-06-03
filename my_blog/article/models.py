@@ -1,11 +1,22 @@
 from django.db import models
-
-# Create your models here.
-
 # 导入内建的User模型。
 from django.contrib.auth.models import User
 # timezone 用于处理时间相关事务。
 from django.utils import timezone
+# 富文本编辑器
+from ckeditor.fields import RichTextField
+from django.urls import reverse
+
+# 文章栏目的模型
+class ArticleColumn(models.Model):
+    # 栏目标题
+    title = models.CharField(max_length=100, blank=True)
+    # 创建时间
+    created = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.title
+
 
 # 博客文章数据模型
 class ArticlePost(models.Model):
@@ -17,12 +28,16 @@ class ArticlePost(models.Model):
 
     # 文章正文。保存大量文本使用 TextField
     body = models.TextField()
+    # body = RichTextField()
 
     # 文章创建时间。参数 default=timezone.now 指定其在创建数据时将默认写入当前的时间
     created = models.DateTimeField(default=timezone.now)
 
     # 文章更新时间。参数 auto_now=True 指定每次数据更新时自动写入当前时间
     updated = models.DateTimeField(auto_now=True)
+
+    # 文章浏览量
+    total_views = models.PositiveIntegerField(default=0)
 
     # 内部类 class Meta 用于给 model 定义元数据
     class Meta:
@@ -34,3 +49,19 @@ class ArticlePost(models.Model):
     def __str__(self):
         # return self.title 将文章标题返回
         return self.title
+
+    # 文章栏目的 “一对多” 外键
+    column = models.ForeignKey(
+        ArticleColumn,
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+        related_name='article'
+    )
+
+    # 获取文章地址
+    def get_absolute_url(self):
+        return reverse('article:article_detail', args=[self.id])
+
+
+

@@ -1,0 +1,57 @@
+{% extends "myadmin/base.html" %}
+{% load staticfiles %}
+
+{% block title %}删除文章{% endblock title%}
+{% block content %}
+
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+      <h1 class="h2" style="width: 80%; margin: 0 auto; text-align: center;">{{ article.title }}</h1>
+    </div>
+    <div class="table-responsive" style="width: 75%; margin: 0 auto; font-size: 1.2em; ">
+        <p class="table-responsive" >{{ article.body|safe }}</p>
+    </div>
+    <br><br><br><br><br><br><br><br><br>
+    <div style="width: 80%; margin: 0 auto; text-align: center;">
+        <a style="display:inline-block;
+            font-size: 1rem; 
+            background-color:#007BFF; 
+            font-weight: 400;
+            border: 1px solid transparent;
+            padding: 5px 5px;
+            color: white;
+            width: 78px;
+            text-decoration: none;
+            border-radius: .25rem;
+            text-align: center;"                    
+            href="#" onclick="confirm_safe_delete()">
+            确定删除
+        </a>
+    </div>
+    
+</main>
+
+<form 
+      style="display:none;" 
+      id="safe_delete"
+      action="{% url 'myadmin:article_safe_delete' article.id %}" 
+      method="POST"
+      >
+    {% csrf_token %}
+    <button type="submit">发送</button>
+</form>
+
+<script>
+    function confirm_safe_delete() {
+        layer.open({
+            title: "确认删除",
+            content: "确认删除这篇文章吗？",
+            yes: function(index, layero) {
+                $('form#safe_delete button').click();
+                layer.close(index);
+            }
+        })
+    }
+    </script>
+
+{% endblock content %}

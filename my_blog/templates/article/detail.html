@@ -10,7 +10,100 @@
 <!-- 写入 base.html 中定义的 content -->
 {% block content %}
 
-<script>
+<!-- 文章详情 -->
+<div class="content-body" >
+    <div class="container" >
+        <div class="row" >
+            <main class="col-md-10 col-md-offset-1" >
+                <article class="post post-1" style="background: #ffffffd3; border-radius: 15px; box-shadow: 0 0 5px #ccc;">
+                    <!-- 标题及作者 -->
+                    <header class="entry-header">
+                        <h1 class="entry-title">{{ article.title }}</h1>
+                        <div class="entry-meta" style="color:gray;"><span >作者：{{ article.author }}</span></div>
+                        <div class="entry-meta" style="color:gray;">
+                            <span class="post-category">
+                                {{ article.created|date:'Y-m-d' }} 发布
+                            </span>
+                            <span class="post-date">
+                                {{ article.updated|date:'Y-m-d' }} 更新
+                            </span>
+                            <span class="post-date">
+                                {{ article.total_views }} 浏览量
+                            </span>
+                            <span >
+                                {{ cmt_ct }} 评论
+                            </span>
+
+                        </div>
+                    </header>
+
+                    <!-- 文章正文 -->
+                    <div class="entry-content clearfix">
+                        <p>{{ article.body|safe }}</p>
+                    </div>
+                    <br><br>
+                </article>
+                <hr width="93%" color="paleturquoise">
+                <!-- 评论 -->
+                <section style="background: #ffffffd3; border-radius: 15px; box-shadow: 0 0 5px #ccc;"
+                     class="comment-area" id="comment-area" >
+                    <hr>
+                    <h3>发表评论</h3>
+                    <form action="{% url 'comment:post_comment' article.id %}" class="comment-form">
+                        <div class="row">
+                            <!-- <div class="col-md-4">
+                                <label for="id_name">名字：</label>
+                                <input type="text" id="id_name" name="name" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="id_email">邮箱：</label>
+                                <input type="email" id="id_email" name="email" required>
+                            </div> -->
+
+                            <div class="col-md-12">
+                                <label for="id_comment">评论：</label>
+                                <!-- 'name'需要和后端的form中的字段一致！！！ -->
+                                <!-- <textarea name="body"  id="id_comment" required style="border-radius: 10px;"></textarea> -->
+                                <div>
+                                    {{ comment_form.media }}
+                                    {{ comment_form.body }}
+                                </div>                                <button type="submit" class="comment-btn" style="float: right; border-radius: 10px;">发表</button>
+                            </div>
+                        </div> <!-- row -->
+                    </form>
+                  
+                    <!-- 显示评论 -->
+                    <div class="comment-list-panel">
+                        <h4>共有<span>{{ comments.count }}</span>条评论</h4>
+                        <ul class="comment-list list-unstyled">
+                            {% for comment in comments %}
+                            <li class="comment-item">
+                                <p>
+                                    <strong style="color: rgb(51, 184, 177)">
+                                        好学的游客
+                                    </strong> 于
+                                    <span style="color: rgb(189, 187, 93)">
+                                        {{ comment.created|date:"Y-m-d H:i:s" }}
+                                    </span> 时说：
+                                </p>
+                                <div class="text">
+                                    {{ comment.body|safe }} 
+                                </div>
+                            </li>
+                            {% endfor %}                           
+                        </ul>
+                    </div>
+                    <br><br><br><br><br>
+                </section>
+
+            </main>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+<!-- <script>
     // 删除文章的函数
     function confirm_safe_delete() {
         layer.open({
@@ -22,32 +115,5 @@
             }
         })
     }
-    
-</script>
 
-<!-- 文章详情 -->
-<div class="container">
-    <div class="row">
-        <!-- 标题及作者 -->
-        <h1 class="col-12 mt-4 mb-4">{{ article.title }}</h1>
-        <div class="col-12 alert alert-success">作者：{{ article.author }}
-            
-            <a href="#" onclick="confirm_safe_delete()">删除文章</a>
-            <a href="{% url "article:article_update" article.id %}">编辑文章</a>
-
-            <!-- 新增一个隐藏的表单 -->
-            <form style="display:none;" id="safe_delete" action="{% url 'article:article_safe_delete' article.id %}"
-                method="POST">
-                {% csrf_token %}
-                <button type="submit">发送</button>
-            </form>
-        </div>
-
-        <!-- 文章正文 -->
-        <div class="col-12">
-            <p>{{ article.body|safe }}</p>
-        </div>
-    </div>
-</div>
-
-{% endblock content %}
+</script> -->

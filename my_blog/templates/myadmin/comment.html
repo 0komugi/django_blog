@@ -1,0 +1,40 @@
+{% extends "myadmin/base.html" %}
+{% load staticfiles %}
+
+{% block title %}评论管理{% endblock title%}
+
+{% block content %}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">文章评论管理</h1>
+  </div>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>body</th>
+          <th>created</th>
+          <th>article_id</th>
+          <th>option</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for comment in cmts %}
+        <tr>
+          <td>{{comment.id}}</td>
+          <td>{{comment.body|slice:'15'}}……</td>
+          <td>{{comment.created}}</td>
+          <td>{{comment.article_id}}</td>
+          <td><a href='{% url "myadmin:comment_delete" comment.id %}'>删除</a></td>
+        </tr>
+        
+        {% endfor %}
+      </tbody>
+    </table>
+
+
+  </div>
+</main>
+
+{% endblock content %}

@@ -1,0 +1,39 @@
+{% extends "myadmin/base.html" %}
+{% load staticfiles %}
+
+{% block title %}主页{% endblock title%}
+
+{% block content %}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">所有文章</h1>
+  </div>
+  <div class="table-responsive">
+    <table class="table" style="text-align: center;">
+      <thead>
+        <tr>
+          {% for article_attr in article_attrs %}
+          <th>{{ article_attr.attname }}</th>
+          {% endfor %}
+          <th>read</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for article in article_list %}
+        <tr>
+          <td>{{article.id}}</td>
+          <td>{{article.author_id}}</td>
+          <td>{{article.title|slice:'15'}}……</td>
+          <td>{{article.body|slice:'15'}}……</td>
+          <td>{{article.created}}</td>
+          <td>{{article.updated}}</td>
+          <td>{{article.total_views}}</td>
+          <td>{{article.column_id}}</td>
+          <td><a href="{% url 'myadmin:article_detail' article.id %}">查看</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</main>
+{% endblock content %}

@@ -4,37 +4,149 @@
 
 <!-- 写入 base.html 中定义的 title -->
 {% block title %}
-    首页
+技术文章
 {% endblock title %}
 
 <!-- 写入 base.html 中定义的 content -->
 {% block content %}
 
-<!-- 定义放置文章标题的div容器 -->
 <div class="container">
-    <div class="row mt-2">
-
+    <!-- 定义放置文章的div容器 -->
+    <div class="row test">
+        <div align="center">
+            <ol class="breadcrumb"
+                style="text-align: center; width: 130px; background: #ffffffb5; border-radius: 18px; box-shadow: 0 0 5px #ccc;">
+                <li>
+                    <a href="{% url 'article:article_list' %}?search={{ search }}">
+                        最新
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'article:article_list' %}?order=total_views&search={{ search }}">
+                        最热
+                    </a>
+                </li>
+            </ol>
+        </div>
+        <!-- 文章 -->
         {% for article in articles %}
-        <!-- 文章内容 -->
-        <div class="col-4 mb-4">
-        <!-- 卡片容器 -->
-            <div class="card h-100">
-                <!-- 标题 -->
-                <h4 class="card-header">{{ article.title }}</h4>
+        <main class="col-md-10 col-md-offset-1">
+            <article class="post post-1" style="background: #ffffffb5; border-radius: 20px; box-shadow: 0 0 5px #ccc;">
+                <header class="entry-header">
+                    <!-- 标题 -->
+                    <h1 class="entry-title">
+                        <a href="{% url 'article:article_detail' article.id %}">
+                            {{ article.title }}
+                        </a>
+                    </h1>
+                    <!-- 注脚 -->
+                    <div class="entry-meta" style="color:gray;">
+                        <!-- 栏目 -->
+                        <span class="post-category">
+                            {% if article.column %}
+                            <p type="button" class="btn btn-sm mb-2" 
+                                {% if article.column.title == 'Python3' %} 
+                                    style="background: #f0c7c7; border-radius: 30px; color:rgb(100, 99, 99); box-shadow: 0 0 5px rgb(168, 109, 109);" 
+                                {% elif article.column.title == 'Linux' %} 
+                                    style="background: #cec7f0; border-radius: 30px; color:rgb(100, 99, 99); box-shadow: 0 0 5px rgb(142, 109, 168);" 
+                                {% elif article.column.title == 'Django' %} 
+                                    style="background: #c8f0c7; border-radius: 30px; color:rgb(100, 99, 99); box-shadow: 0 0 5px rgb(109, 168, 122);" 
+                                {% elif article.column.title == 'Software Test' %} 
+                                    style="background: #f0e2c7; border-radius: 30px; color:rgb(100, 99, 99); box-shadow: 0 0 5px rgb(168, 147, 109);" 
+                                {% endif %}
+                            >
+                                    {{ article.column }}
+                            </p>
+                            {% endif %}
+                        </span>
+                        <span class="post-category">
+                            {{ article.created|date:'Y-m-d' }} 发布
+                        </span>
+                        <span class="post-date">
+                            {{ article.updated|date:'Y-m-d' }} 更新
+                        </span>
+                        <span class="post-date">
+                            {{ article.total_views }} 浏览量
+                        </span>
+                        <span>
+                            {% for key, value in cmt_ct.items %}
+                                {% if key == article.id %}
+                                    {{ value }} 评论
+                                {% endif %}
+                            {% endfor %}
+                        </span>
+                    </div>
+                </header>
                 <!-- 摘要 -->
-                <div class="card-body">
-                    <p class="card-text">{{ article.body|slice:'100' }}...</p>
+                <div class="entry-content clearfix">
+                    <p style="color: gray;">
+                        {{ article.body|slice:'100' }}...
+                    </p>
+                    <div class="read-more cl-effect-14">
+                        <a href="{% url 'article:article_detail' article.id %}" class="more-link">
+                            查看文章 <span class="meta-nav">→</span>
+                        </a>
+                    </div>
                 </div>
-                <!-- 注脚 -->
-                <div class="card-footer">
-                    <a href="{% url 'article:article_detail' article.id %}" class="btn btn-primary">阅读本文</a>
-                </div>
+                <hr>
+            </article>
+        </main>
+        {% endfor %}
+    </div>
+
+    <!-- 页码导航 -->
+    <nav style="text-align: center;">
+        <div class="pagination row">
+            <div class="m-auto">
+                <span class="step-links">
+                    <!-- 如果不是第一页，则显示上翻按钮 -->
+                    {% if articles.paginator.num_pages != 1 %}
+                    {% if articles.has_previous%}
+                    {% if articles.number != 2 %}
+                    <a href="?page=1&order={{ order }}&search={{ search }}" class="btn btn-default"
+                        style="background: #ffffffb5; border-radius: 9px; box-shadow: 0 0 5px #ccc;">
+                        &laquo; 1
+                    </a>
+                    <span>...</span>
+                    {% endif %}
+                    <a href="?page={{ articles.previous_page_number }}&order={{ order }}&search={{ search }}"
+                        class="btn btn-default"
+                        style="background: #ffffffb5; border-radius: 9px; box-shadow: 0 0 5px #ccc;">
+                        {{ articles.previous_page_number }}
+                    </a>
+                    {% endif %}
+
+                    <!-- 当前页面 -->
+                    <span class="current btn btn-default btn-lg"
+                        style="background: #ffffffb5; border-radius: 9px; box-shadow: 0 0 5px #ccc;">
+                        {{ articles.number }}
+                    </span>
+
+                    <!-- 如果不是最末页，则显示下翻按钮 -->
+                    {% if articles.has_next %}
+                    <a href="?page={{ articles.next_page_number }}&order={{ order }}&search={{ search }}"
+                        class="btn btn-default"
+                        style="background: #ffffffb5; border-radius: 9px; box-shadow: 0 0 5px #ccc;">
+                        {{ articles.next_page_number }}
+                    </a>
+                    {% if articles.next_page_number != articles.paginator.num_pages %}
+                    <span>...</span>
+                    <a href="?page={{ articles.paginator.num_pages }}&order={{ order }}&search={{ search }}"
+                        class="btn btn-default"
+                        style="background: #ffffffb5; border-radius: 9px; box-shadow: 0 0 5px #ccc;">
+                        {{ articles.paginator.num_pages }} &raquo;
+                    </a>
+                    {% endif %}
+                    {% endif %}
+                    {% endif %}
+                </span>
             </div>
         </div>
-        {% endfor %}
-
-    </div>
+    </nav>
 </div>
+
+
+
 {% endblock content %}
 
 <!-- {% for article in articles %}

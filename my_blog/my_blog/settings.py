@@ -39,12 +39,18 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # 激活app
-    # 文章管理模块
+    # 文章列表模块
     'article',  
+    # 文章管理后台模块
+    'myadmin',      # 逗号！！！
     # 用户管理模块
     'userprofile',
     # 第三方库：重置密码模块
-    'password_reset'
+    'password_reset',
+    # 第三方库：富文本编辑器
+    'ckeditor',
+    # 第三方库：评论
+    'comment',
 ]
 
 MIDDLEWARE = [
@@ -117,7 +123,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 

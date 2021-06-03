@@ -1,38 +1,95 @@
-{% extends "base.html" %} {% load staticfiles %}
-{% block title %} 登录 {% endblock title %}
+{% extends "base.html" %}
+<!-- extends表明此页面继承自 base.html 文件 -->
+{% load staticfiles %}
+
+<!-- 写入 base.html 中定义的 title -->
+{% block title %}
+后台登录
+{% endblock title %}
+
+<!-- 写入 base.html 中定义的 content -->
 {% block content %}
+
+<!--用百度的静态资源库的cdn安装bootstrap环境-->
+<!--font-awesome 核心CSS 文件-->
+<!-- 用户名和密码的图标 -->
+<link href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+<style type="text/css">
+    
+    .form {
+        border: 2px solid rgba(187, 187, 187, 0.514);
+        border-radius: 15px;
+        width: 400px;
+        height: 340px;
+        margin: 100px auto;   
+    }
+
+    #login_form {
+        display: block;
+    }
+
+    #register_form {
+        display: none;
+    }
+
+    .fa {
+        display: inline-block;
+        top: 27px;
+        left: 6px;
+        position: relative;
+        color: #ccc;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+        padding-left: 26px;
+    }
+
+    .checkbox {
+        padding-left: 21px;
+    }
+</style>
+
+<!--
+基础知识：
+网格系统:通过行和列布局
+行必须放在container内
+手机用col-xs-*
+平板用col-sm-*
+笔记本或普通台式电脑用col-md-*
+大型设备台式电脑用col-lg-*
+为了兼容多个设备，可以用多个col-*-*来控制；
+-->
 <div class="container">
-    <div class="row">
-        <div class="col-12">
+
+    <div style="background: #ffffffb5; border: none; box-shadow: 0 0 5px #ccc;" class="form row">
+        <form method="POST" action="." class="form-horizontal col-sm-offset-3 col-md-offset-3" id="login_form">
+            {% csrf_token %}
             <br>
-            <h5>还没有账号？</h5>
-            <h5>点击<a href='{% url "userprofile:register" %}'>注册账号</a>加入我们吧！</h5>
-            <br>
-            <form method="post" action=".">
-                ...
-            </form>
-        </div>
-        <div class="col-12">
-            <br>
-            <form method="post" action=".">
-                {% csrf_token %}
-                <!-- 账号 -->
+            <h3 class="form-title">文章后台管理登录</h3>
+            <div class="col-sm-9 col-md-9">
                 <div class="form-group">
-                    <label for="username">账号</label>
-                    <input type="text" class="form-control" id="username" name="username">
+                    <i class="fa fa-user fa-lg"></i>
+                    <input class="form-control required" type="text" placeholder="用户名" id="username" name="username"
+                        autofocus="autofocus" maxlength="20" />
                 </div>
-                <!-- 密码 -->
                 <div class="form-group">
-                    <label for="password">密码</label>
-                    <input type="password" class="form-control" id="password" name="password">
+                    <i class="fa fa-lock fa-lg"></i>
+                    <input class="form-control required" type="password" placeholder="密码" id="password" name="password"
+                        maxlength="8" />
                 </div>
-                <!-- 提交按钮 -->
-                <button type="submit" class="btn btn-primary">提交</button>
-            </form>
-            <br>
-            <h5>忘记密码了？</h5>
-            <h5>点击<a href="{% url 'password_reset_recover' %}">这里</a>重置密码</h5>
-        </div>
+                <div class="form-group">                    
+                    <hr>
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-info pull-right" value="登录 " 
+                    style="background: #2d9097b5; border-radius: 8px;" />
+                </div>
+            </div>
+        </form>
     </div>
 </div>
+
+
 {% endblock content %}

@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+<!-- extends表明此页面继承自 base.html 文件 -->
+<!-- 
+    载入静态文件
+    使用 Django 3 学习的读者改为 {% load static %}
+-->
+{% load staticfiles %}
+
+<!-- 写入 base.html 中定义的 title -->
+{% block title %}
+主页
+{% endblock title %}
+
+<!-- 写入 base.html 中定义的 content -->
+{% block content %}
+
+<div class="content-body">
+    <div class="container">
+        <div class="row">
+            <main class="col-md-12">
+                <article class="post" style="background: #ffffffb5; border-radius: 30px; box-shadow: 0 0 5px #ccc;">
+                    <div class="entry-content clearfix" align="center">
+                        <h2 class="page-title" style="color:rgb(40, 75, 77);">➤ 网站公告 ※</h2>
+                        <br>
+                        <div style="font-size: 18px; width: 85%; text-align: left; color: rgb(78, 116, 116);">
+                            <ul class="post post-1"
+                                style="background: #ffffffb5; border-radius: 15px; box-shadow: 0 0 5px #ccc;">
+                                <li>
+                                    <p>
+                                        欢迎你的到来！在零圆的博客里，你可以学习到许多有关python、测试、Django以及Linux等技术的知识，
+                                        只需要点击菜单栏上的“<span style="background: #bde5f1; border-radius: 30px; color:rgb(100, 99, 99);
+                                        box-shadow: 0 0 5px rgb(109, 151, 168);"><a  href="{% url 'article:article_list' %}">  技术文章  </a></span>
+                                        ”选项，即可在知识的海洋里遨游。
+                                    </p>
+
+                                </li>
+                                <li>
+                                    <p>
+                                        当然了，如果你有什么想查找的，可以点击右上角的放大镜，即可对技术文章进行搜索。
+                                        你还可以按照热度排序来查看目前最热门的文章。
+                                    </p>
+
+                                </li>
+                                <li>
+                                    <p>
+                                        每一篇技术文章里，你都可以自由地发表评论，欢迎你的踊跃讨论！
+                                    </p>
+
+                                </li>
+                                <li>
+                                    <p>
+                                        还可以点击“<span style="background: #bde5f1; border-radius: 30px; color:rgb(100, 99, 99);
+                                        box-shadow: 0 0 5px rgb(109, 151, 168);"><a  href="{% url 'article:chart' %}">  数据查看  </a></span>”选项，
+                                        查看关于博客文章的相关数据，包括文章发布量、文章删除量和文章总数，以及它们在每个月份的变化。
+                                    </p>
+
+                                </li>
+                                <li>
+                                    <p>
+                                        如果你是已经注册过的管理员，可点击“<span style="background: #bde5f1; border-radius: 30px; color:rgb(100, 99, 99);
+                                        box-shadow: 0 0 5px rgb(109, 151, 168);"><a  href="{% url 'userprofile:login' %}">  后台管理  </a></span>”选项，
+                                        进入文章后台管理平台，查看文章的所有相关信息，包括文章发布时间、文章编辑时间、文章浏览量、文章作者、文章栏目、文章评论等信息。
+                                        还可以对文章进行相关操作，包括文章发布、删除和编辑，以及对文章评论进行管理，包括评论删除。
+                                    </p>
+
+                                </li>
+                                <li>
+                                    <p>
+                                        如果你想了解更多的我，可点击“<span style="background: #bde5f1; border-radius: 30px; color:rgb(100, 99, 99);
+                                        box-shadow: 0 0 5px rgb(109, 151, 168);"><a  href="{% url 'about_me' %}">  关于 我   </a></span>”选项。
+                                        欢迎学习交流。
+                                    </p>
+                                </li>
+                                <br>
+                            </ul>
+
+                        </div>
+
+                        <hr color="darkslategrey" width="85%">
+
+                        <h2 class="page-title" style="color:rgb(40, 75, 77);">➤ 推荐文章 ⇩</h2>
+                        <br>
+                        <article class="post post-1"
+                            style="width: 35%; background: #ffffffb5; border-radius: 20px; box-shadow: 0 0 5px #ccc;">
+                            <h3>
+                                <a href="{% url 'article:article_detail' 27 %}">性能测试基础 </a>
+                            </h3>
+                            <div class="read-more cl-effect-14">
+                                <a href="{% url 'article:article_detail' 27 %}" class="more-link">
+                                    查看文章 <span class="meta-nav">→</span>
+                                </a>
+                            </div>
+                            <hr>
+                        </article>
+                        <article class="post post-1"
+                            style="width: 35%; background: #ffffffb5; border-radius: 20px; box-shadow: 0 0 5px #ccc;">
+                            <h3>
+                                <a href="{% url 'article:article_detail' 19 %}">异步IO</a>
+                            </h3>
+                            <div class="read-more cl-effect-14">
+                                <a href="{% url 'article:article_detail' 19 %}" class="more-link">
+                                    查看文章 <span class="meta-nav">→</span>
+                                </a>
+                            </div>
+                            <hr>
+                        </article>
+
+                        <hr color="paleturquoise">
+
+                        <h3 class="title text-center">🧡💛💙💚💜🖤</h3>
+                    </div>
+                </article>
+            </main>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

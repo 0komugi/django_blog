@@ -1,0 +1,46 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>输入有误</title>
+    <style>
+        body {
+            background: #f6f6f6;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 90vh;
+            align-items: center;
+        }
+
+        .container img {
+            width: 150px;
+            height: 150px;
+            margin-bottom: 10px;
+        }
+
+        .container text {
+            font-size: 1.5em;
+            color: #333;
+            padding: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="{% static 'img/err.jpeg' %}">
+        <br>
+        <text id="text">{{ errtxt }}</text>
+        <br><br>
+        <h3><a href="{% url 'userprofile:login' %}">跳转回登录页面</a></h3>
+    </div>
+    
+</body>
+</html>
